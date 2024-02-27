@@ -2,3 +2,68 @@ name: ArdaGone
 version: '1.20.4'
 main: org.laser.ardagone.ArdaGone
 api-version: '1.20'
+commands:
+  setgamespawnpoint:
+    permission: lsr.admin
+  start:
+    permission: lsr.admin
+  join:
+  leave:
+  givecrate:
+    permission: lsr.admin
+  summonvillager:
+    permission: lsr.admin
+  setdialogue:
+    permission: lsr.admin
+  setgui:
+    permission: lsr.admin
+  removedialogue:
+    permission: lsr.admin
+  getdialoguebook:
+    permission: lsr.admin
+  getdialogues:
+    permission: lsr.admin
+  createnewgui:
+    permission: lsr.admin
+  deletegui:
+    permission: lsr.admin
+  opengui:
+    permission: lsr.admin
+  edititem:
+    permission: lsr.admin
+  gui:
+    permission: lsr.admin
+  setguiname:
+    permission: lsr.admin
+  setprice:
+    permission: lsr.admin
+  setsign:
+    permission: lsr.admin
+  setinteractiveblock:
+    permission: lsr.admin
+  removeinteractiveblock:
+    permission: lsr.admin
+  createcharacter :
+    permission: lsr.admin
+  listcharacters:
+    permission: lsr.admin
+  checkchars:
+    permission: lsr.admin
+  character:
+    permission: lsr.admin
+  selectcharacter:
+    permission: lsr.admin
+  getchar:
+    permission: lsr.admin
+  setcharitems:
+    permission: lsr.admin
+  players:
+  getParty:
+    permission: lsr.admin
+  invite:
+  accept:
+  clearparty:
+  test:
+    permission: lsr.admin
+  setStatus:
+    permission: lsr.admin
