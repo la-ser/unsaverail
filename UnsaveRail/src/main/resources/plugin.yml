@@ -1,0 +1,4 @@
+name: UnsaveRail
+version: '${project.version}'
+main: org.laser.unsaverail.UnsaveRail
+api-version: '1.20'
