@@ -1,0 +1,4 @@
+name: ArdaGone
+version: '${project.version}'
+main: org.laser.ardagone.ArdaGone
+api-version: '1.20'
