@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -14,6 +15,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public final class ArdaGone extends JavaPlugin implements Listener {
 
@@ -69,8 +71,11 @@ public final class ArdaGone extends JavaPlugin implements Listener {
 
         Player player = (Player) event.getWhoClicked();
         if (event.getView().getTitle().equals("Character Selection")) {
-            event.setCancelled(true);
             int slotID = event.getSlot();
+
+            if (slotID >= 8) return;
+
+            event.setCancelled(true);
             characters.selectCharacter(player, slotID);
         }
     }
@@ -80,6 +85,18 @@ public final class ArdaGone extends JavaPlugin implements Listener {
         if (event.getItem() != null && event.getItem().getType() == Material.NETHER_STAR) {
             Player player = event.getPlayer();
             openCharacterSelectionGUI(player);
+        }
+    }
+
+    @EventHandler
+    public void onProjectileHit(ProjectileHitEvent event) {
+        if (event.getHitBlock() != null && event.getHitBlock().getType() != Material.AIR) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    event.getEntity().remove();
+                }
+            }.runTaskLater(this, 20);
         }
     }
 }
