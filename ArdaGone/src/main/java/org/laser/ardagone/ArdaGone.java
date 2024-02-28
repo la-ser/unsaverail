@@ -48,26 +48,24 @@ public final class ArdaGone extends JavaPlugin implements Listener {
     private void openCharacterSelectionGUI(Player player) {
         Inventory gui = Bukkit.createInventory(player, InventoryType.DROPPER, "Character Selection");
 
-        // Add buttons for each character
-        ItemStack character1 = new ItemStack(Material.DIAMOND_SWORD);
-        // Add any additional metadata or lore as needed
-        gui.addItem(character1);
+        ItemStack character1 = new ItemStack(Material.PLAYER_HEAD);
+        ItemMeta meta1 = character1.getItemMeta();
+        meta1.setDisplayName("Henry");
+        character1.setItemMeta(meta1);
+        gui.setItem(0, character1);
 
-        ItemStack character2 = new ItemStack(Material.IRON_SWORD);
-        // Add any additional metadata or lore as needed
-        gui.addItem(character2);
-
-        // Add more characters as needed
+        ItemStack character2 = new ItemStack(Material.SKELETON_SKULL);
+        ItemMeta meta2 = character1.getItemMeta();
+        meta2.setDisplayName("Robin");
+        character2.setItemMeta(meta2);
+        gui.setItem(1, character2);
 
         player.openInventory(gui);
     }
 
-    // Event handler for when a player clicks in the inventory
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (!(event.getWhoClicked() instanceof Player)) {
-            return;
-        }
+        if (!(event.getWhoClicked() instanceof Player)) return;
 
         Player player = (Player) event.getWhoClicked();
         if (event.getView().getTitle().equals("Character Selection")) {
