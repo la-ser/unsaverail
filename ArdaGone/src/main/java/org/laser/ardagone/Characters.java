@@ -182,19 +182,19 @@ public class Characters implements Listener {
                             }
 
                             new BukkitRunnable() {
-                                int count = 0;
+                                int count = 7;
 
                                 @Override
                                 public void run() {
-                                    if (count < 7) {
+                                    if (count > 0) {
                                         Block block = world.getBlockAt(finalPlayerLocation.getBlockX(), finalPlayerLocation.getBlockY() + count, finalPlayerLocation.getBlockZ());
                                         block.setType(Material.AIR);
-                                        count++;
+                                        count--;
                                     } else {
                                         cancel();
                                     }
                                 }
-                            }.runTaskTimer(plugin, 70, 10);
+                            }.runTaskTimer(plugin, 50, 20);
                         }
                     }.runTaskLater(plugin, 13);
 
