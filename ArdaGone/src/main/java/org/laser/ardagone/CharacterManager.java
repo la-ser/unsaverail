@@ -32,14 +32,16 @@ import java.util.stream.Collectors;
 public class CharacterManager implements CommandExecutor, Listener, TabCompleter {
 
     private final ArdaGone plugin;
+    private final Characters characters;
 
     private File selectedCharsFile;
     private FileConfiguration selectedCharsConfig;
     private File charactersFile;
     private FileConfiguration charactersConfig;
 
-    public CharacterManager(ArdaGone plugin) {
+    public CharacterManager(ArdaGone plugin, Characters characters) {
         this.plugin = plugin;
+        this.characters = characters;
 
         selectedCharsFile = new File(plugin.getDataFolder(), "selectedchars.yml");
         selectedCharsConfig = YamlConfiguration.loadConfiguration(selectedCharsFile);
@@ -225,6 +227,8 @@ public class CharacterManager implements CommandExecutor, Listener, TabCompleter
                             setSelectedCharacter(player, characterId);
                             player.closeInventory();
                             openUnlockedCharactersGUI(player);
+
+                            characters.selectCharacter(player, slot-1);
                         }
                     }
                 }

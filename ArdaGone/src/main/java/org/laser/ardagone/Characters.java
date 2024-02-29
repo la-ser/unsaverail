@@ -149,6 +149,8 @@ public class Characters implements Listener {
         int playerCharID = getCharacter(player);
 
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            if (player.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() != 1) return;
+
             if (playerCharID == 0) {
                 if (!CooldownManager.isOnCooldown(player)) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20 * 5, 2));
@@ -156,7 +158,7 @@ public class Characters implements Listener {
 
                     CooldownManager.setCooldown(player, 7500);
                 } else {
-                    player.sendMessage("Dash ability is on cooldown! " + CooldownManager.getRemainingCooldown(player) / 1000 + " seconds remaining.");
+                    player.sendMessage("Ability is on cooldown! " + CooldownManager.getRemainingCooldown(player) / 1000 + " seconds remaining.");
                 }
             }
             if (playerCharID == 1) {
@@ -200,7 +202,7 @@ public class Characters implements Listener {
 
                     CooldownManager.setCooldown(player, 7500);
                 } else {
-                    player.sendMessage("Dash ability is on cooldown! " + CooldownManager.getRemainingCooldown(player) / 1000 + " seconds remaining.");
+                    player.sendMessage("Ability is on cooldown! " + CooldownManager.getRemainingCooldown(player) / 1000 + " seconds remaining.");
                 }
             }
         }

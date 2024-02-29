@@ -36,7 +36,7 @@ public final class ArdaGone extends JavaPlugin implements Listener {
 
         characters = new Characters(this);
 
-        characterManager = new CharacterManager(this);
+        characterManager = new CharacterManager(this, characters);
         getCommand("createcharacter").setExecutor(characterManager);
         getCommand("listcharacters").setExecutor(characterManager);
         getCommand("checkchars").setExecutor(characterManager);
