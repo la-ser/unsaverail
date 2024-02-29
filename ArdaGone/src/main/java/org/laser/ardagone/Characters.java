@@ -1,9 +1,12 @@
 package org.laser.ardagone;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -92,18 +95,19 @@ public class Characters implements Listener {
             setPlayerHealth(player, 1000);
             ItemStack henrySword = new ItemStack(Material.WOODEN_SWORD);
             ItemMeta henrySwordMeta = henrySword.getItemMeta();
-            henrySwordMeta.setDisplayName("§cSword of poorness");
+            henrySwordMeta.setDisplayName("§cSword");
             henrySwordMeta.setUnbreakable(true);
             henrySwordMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
             henrySwordMeta.setCustomModelData(1);
             henrySwordMeta.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
-            henrySwordMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE.name(), 230, AttributeModifier.Operation.ADD_NUMBER));            henrySword.setItemMeta(henrySwordMeta);
+            henrySwordMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE.name(), 230, AttributeModifier.Operation.ADD_NUMBER));
+            henrySword.setItemMeta(henrySwordMeta);
             player.getInventory().setItem(0, henrySword);
         } else if (charID == 1) {
             setPlayerHealth(player, 650);
             ItemStack robinBow = new ItemStack(Material.BOW);
             ItemMeta robinBowMeta = robinBow.getItemMeta();
-            robinBowMeta.setDisplayName("§eBow of justice");
+            robinBowMeta.setDisplayName("§eBow");
             robinBowMeta.setUnbreakable(true);
             robinBowMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
             robinBowMeta.setCustomModelData(1);
@@ -153,7 +157,22 @@ public class Characters implements Listener {
                 } else {
                     player.sendMessage("Dash ability is on cooldown! " + CooldownManager.getRemainingCooldown(player) / 1000 + " seconds remaining.");
                 }
+            }
+            if (playerCharID == 1) {
+                if (!CooldownManager.isOnCooldown(player)) {
+                    player.setVelocity(player.getVelocity().setY(7));
+                    Location location = player.getLocation();
+                    World world = player.getWorld();
 
+                    for (int i = 1; i <= 7; i++) {
+                        Block block = world.getBlockAt(location.getBlockX(), location.getBlockY() - i, location.getBlockZ());
+                        block.setType(Material.OAK_LOG);
+                    }
+
+                    CooldownManager.setCooldown(player, 7500);
+                } else {
+                    player.sendMessage("Dash ability is on cooldown! " + CooldownManager.getRemainingCooldown(player) / 1000 + " seconds remaining.");
+                }
             }
         }
     }
