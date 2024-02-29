@@ -171,8 +171,7 @@ public class Characters implements Listener {
                 }
 
                 if (!CooldownManager.isOnCooldown(player)) {
-                    player.setVelocity(player.getVelocity().setY(1.4));
-
+                    player.setVelocity(player.getVelocity().setY(1.32));
                     Location finalPlayerLocation = playerLocation;
                     new BukkitRunnable() {
                         @Override
@@ -181,6 +180,21 @@ public class Characters implements Listener {
                                 Block block = world.getBlockAt(finalPlayerLocation.getBlockX(), finalPlayerLocation.getBlockY() + i -1, finalPlayerLocation.getBlockZ());
                                 block.setType(Material.OAK_LOG);
                             }
+
+                            new BukkitRunnable() {
+                                int count = 0;
+
+                                @Override
+                                public void run() {
+                                    if (count < 7) {
+                                        Block block = world.getBlockAt(finalPlayerLocation.getBlockX(), finalPlayerLocation.getBlockY() + count, finalPlayerLocation.getBlockZ());
+                                        block.setType(Material.AIR);
+                                        count++;
+                                    } else {
+                                        cancel();
+                                    }
+                                }
+                            }.runTaskTimer(plugin, 70, 10);
                         }
                     }.runTaskLater(plugin, 13);
 
