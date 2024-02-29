@@ -1,6 +1,9 @@
 package org.laser.ardagone;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -14,18 +17,34 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.lang.reflect.Field;
+import java.util.Base64;
+import java.util.UUID;
 
 public final class ArdaGone extends JavaPlugin implements Listener {
 
     private Characters characters;
+    private CharacterManager characterManager;
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
         getCommand("test").setExecutor(this);
 
         characters = new Characters(this);
+
+        characterManager = new CharacterManager(this);
+        getCommand("createcharacter").setExecutor(characterManager);
+        getCommand("listcharacters").setExecutor(characterManager);
+        getCommand("checkchars").setExecutor(characterManager);
+        getCommand("character").setExecutor(characterManager);
+        getCommand("selectcharacter").setExecutor(characterManager);
+        getCommand("getchar").setExecutor(characterManager);/*
+        getCommand("character").setTabCompleter(characterManager);*/
+        getServer().getPluginManager().registerEvents(characterManager, this);
     }
 
     @Override
@@ -98,5 +117,40 @@ public final class ArdaGone extends JavaPlugin implements Listener {
                 }
             }.runTaskLater(this, 20);
         }
+    }
+
+    public static ItemStack getHeadFromURL(String headName, String url) {
+        ItemStack stack = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta meta = (SkullMeta) stack.getItemMeta();
+
+        GameProfile profile = new GameProfile(UUID.randomUUID(), "");
+        profile.getProperties().put("textures", new Property("textures", new String(Base64.getEncoder().encode(String.format("{\"textures\":{\"SKIN\":{\"url\":\"%s\"}}}", url).getBytes()))));
+
+        Field profileField;
+        try {
+            profileField = meta.getClass().getDeclaredField("profile");
+            profileField.setAccessible(true);
+            profileField.set(meta, profile);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        meta.setDisplayName(ChatColor.WHITE + headName);
+        stack.setItemMeta(meta);
+
+        return stack;
+    }
+
+    public static ItemStack getPlayerHead(String playerName, String headName) {
+        ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta meta = (SkullMeta) playerHead.getItemMeta();
+
+        meta.setOwner(playerName);
+
+        meta.setDisplayName(headName);
+
+        playerHead.setItemMeta(meta);
+
+        return playerHead;
     }
 }

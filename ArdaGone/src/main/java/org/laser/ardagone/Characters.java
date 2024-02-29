@@ -37,7 +37,7 @@ public class Characters implements Listener {
 
     public Characters(ArdaGone plugin) {
         this.plugin = plugin;
-        this.configfFile = new File(plugin.getDataFolder(), "characters.yml");
+        this.configfFile = new File(plugin.getDataFolder(), "char.yml");
         this.config = YamlConfiguration.loadConfiguration(configfFile);
         this.dashCooldowns = new HashMap<>();
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -171,7 +171,7 @@ public class Characters implements Listener {
                 }
 
                 if (!CooldownManager.isOnCooldown(player)) {
-                    player.setVelocity(player.getVelocity().setY(1.32));
+                    player.setVelocity(player.getVelocity().setY(1.35));
                     Location finalPlayerLocation = playerLocation;
                     new BukkitRunnable() {
                         @Override
