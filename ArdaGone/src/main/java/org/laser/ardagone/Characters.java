@@ -21,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.io.File;
@@ -159,15 +160,29 @@ public class Characters implements Listener {
                 }
             }
             if (playerCharID == 1) {
-                if (!CooldownManager.isOnCooldown(player)) {
-                    player.setVelocity(player.getVelocity().setY(7));
-                    Location location = player.getLocation();
-                    World world = player.getWorld();
+                Location playerLocation = player.getLocation();
+                World world = player.getWorld();
 
-                    for (int i = 1; i <= 7; i++) {
-                        Block block = world.getBlockAt(location.getBlockX(), location.getBlockY() - i, location.getBlockZ());
-                        block.setType(Material.OAK_LOG);
+                if (player.getLocation().subtract(0, 1, 0).getBlock().getType() == Material.AIR) {
+                    if (player.getLocation().subtract(0, 2, 0).getBlock().getType() == Material.AIR) {
+                        return;
                     }
+                    playerLocation = playerLocation.subtract(new Vector(0,1,0));
+                }
+
+                if (!CooldownManager.isOnCooldown(player)) {
+                    player.setVelocity(player.getVelocity().setY(1.4));
+
+                    Location finalPlayerLocation = playerLocation;
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            for (int i = 1; i <= 7; i++) {
+                                Block block = world.getBlockAt(finalPlayerLocation.getBlockX(), finalPlayerLocation.getBlockY() + i -1, finalPlayerLocation.getBlockZ());
+                                block.setType(Material.OAK_LOG);
+                            }
+                        }
+                    }.runTaskLater(plugin, 13);
 
                     CooldownManager.setCooldown(player, 7500);
                 } else {
