@@ -186,7 +186,7 @@ public class Characters implements Listener {
 
                                 @Override
                                 public void run() {
-                                    if (count > 0) {
+                                    if (count >= 0) {
                                         Block block = world.getBlockAt(finalPlayerLocation.getBlockX(), finalPlayerLocation.getBlockY() + count, finalPlayerLocation.getBlockZ());
                                         block.setType(Material.AIR);
                                         count--;
@@ -194,7 +194,7 @@ public class Characters implements Listener {
                                         cancel();
                                     }
                                 }
-                            }.runTaskTimer(plugin, 50, 20);
+                            }.runTaskTimer(plugin, 50, 5);
                         }
                     }.runTaskLater(plugin, 13);
 
