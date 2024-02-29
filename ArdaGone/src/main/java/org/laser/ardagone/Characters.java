@@ -90,10 +90,9 @@ public class Characters implements Listener {
 
         if (charID == 0) {
             setPlayerHealth(player, 1000);
-
             ItemStack henrySword = new ItemStack(Material.WOODEN_SWORD);
             ItemMeta henrySwordMeta = henrySword.getItemMeta();
-            henrySwordMeta.setDisplayName("§cHenry's Sword");
+            henrySwordMeta.setDisplayName("§cSword of poorness");
             henrySwordMeta.setUnbreakable(true);
             henrySwordMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
             henrySwordMeta.setCustomModelData(1);
@@ -104,7 +103,7 @@ public class Characters implements Listener {
             setPlayerHealth(player, 650);
             ItemStack robinBow = new ItemStack(Material.BOW);
             ItemMeta robinBowMeta = robinBow.getItemMeta();
-            robinBowMeta.setDisplayName("§eRobin's Bow");
+            robinBowMeta.setDisplayName("§eBow of justice");
             robinBowMeta.setUnbreakable(true);
             robinBowMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
             robinBowMeta.setCustomModelData(1);
