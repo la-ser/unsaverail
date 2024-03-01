@@ -218,7 +218,7 @@ public class Characters implements Listener {
                                         cancel();
                                     }
                                 }
-                            }.runTaskTimer(plugin, 50, 5);
+                            }.runTaskTimer(plugin, 80, 3);
                         }
                     }.runTaskLater(plugin, 13);
 
