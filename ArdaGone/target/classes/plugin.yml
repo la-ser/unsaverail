@@ -10,3 +10,6 @@ commands:
   character:
   selectcharacter:
   getchar:
+  fornite:
+  savespawnpoint:
+  randomspawn:

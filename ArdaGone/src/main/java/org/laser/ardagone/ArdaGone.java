@@ -14,6 +14,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -29,6 +30,8 @@ public final class ArdaGone extends JavaPlugin implements Listener {
 
     private Characters characters;
     private CharacterManager characterManager;
+    private TheFog theFog;
+    private SpawnPoints spawnPoints;
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
@@ -45,6 +48,13 @@ public final class ArdaGone extends JavaPlugin implements Listener {
         getCommand("getchar").setExecutor(characterManager);/*
         getCommand("character").setTabCompleter(characterManager);*/
         getServer().getPluginManager().registerEvents(characterManager, this);
+
+        theFog = new TheFog(this);
+        getCommand("fornite").setExecutor(theFog);
+
+        spawnPoints = new SpawnPoints(this);
+        getCommand("savespawnpoint").setExecutor(spawnPoints);
+        getCommand("randomspawn").setExecutor(spawnPoints);
     }
 
     @Override
@@ -152,5 +162,12 @@ public final class ArdaGone extends JavaPlugin implements Listener {
         playerHead.setItemMeta(meta);
 
         return playerHead;
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        player.setHealthScaled(true);
+        player.setHealthScale(20);
     }
 }
