@@ -161,6 +161,7 @@ public class Characters implements Listener {
                     player.sendMessage("Ability is on cooldown! " + CooldownManager.getRemainingCooldown(player) / 1000 + " seconds remaining.");
                 }
             }
+
             if (playerCharID == 1) {
                 Location playerLocation = player.getLocation();
                 World world = player.getWorld();
@@ -172,7 +173,7 @@ public class Characters implements Listener {
                     playerLocation = playerLocation.subtract(new Vector(0,1,0));
                 }
 
-                if (!CooldownManager.isOnCooldown(player)) {
+                if (!CooldownManager.isOnCooldown(player) && !player.isSneaking()) {
                     player.setVelocity(player.getVelocity().setY(1.35));
                     Location finalPlayerLocation = playerLocation;
                     new BukkitRunnable() {
