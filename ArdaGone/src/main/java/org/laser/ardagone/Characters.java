@@ -58,7 +58,7 @@ public class Characters implements Listener {
         ConfigurationSection characterSection = config.getConfigurationSection("char");
         if (characterSection == null) {
             characterSection = config.createSection("char");
-        };
+        }
 
         if (charID == 0) {
             player.sendMessage("You have selected 'Henry'!");
@@ -66,7 +66,11 @@ public class Characters implements Listener {
         } else if (charID == 1) {
             player.sendMessage("You have selected 'Robin'!");
             characterSection.set(player.getUniqueId().toString(), 1);
-        } else {
+        } else if (charID == 2) {
+            player.sendMessage("You have selected 'Thorn'!");
+            characterSection.set(player.getUniqueId().toString(), 2);
+        }
+        else {
             player.sendMessage("Err selecting character!");
             return;
         }
@@ -93,8 +97,9 @@ public class Characters implements Listener {
         player.getInventory().clear();
 
         if (charID == 0) {
+
             setPlayerHealth(player, 1000);
-            ItemStack henrySword = new ItemStack(Material.WOODEN_SWORD);
+            ItemStack henrySword = new ItemStack(Material.STONE_SWORD);
             ItemMeta henrySwordMeta = henrySword.getItemMeta();
             henrySwordMeta.setDisplayName("§cSword");
             henrySwordMeta.setUnbreakable(true);
@@ -104,7 +109,9 @@ public class Characters implements Listener {
             henrySwordMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE.name(), 230, AttributeModifier.Operation.ADD_NUMBER));
             henrySword.setItemMeta(henrySwordMeta);
             player.getInventory().setItem(0, henrySword);
+
         } else if (charID == 1) {
+
             setPlayerHealth(player, 650);
             ItemStack robinBow = new ItemStack(Material.BOW);
             ItemMeta robinBowMeta = robinBow.getItemMeta();
@@ -114,6 +121,20 @@ public class Characters implements Listener {
             robinBowMeta.setCustomModelData(1);
             robinBow.setItemMeta(robinBowMeta);
             player.getInventory().setItem(0, robinBow);
+
+        } else if (charID == 2) {
+
+            setPlayerHealth(player, 850);
+            ItemStack thornSword = new ItemStack(Material.WOODEN_SWORD);
+            ItemMeta thornSwordMeta = thornSword.getItemMeta();
+            thornSwordMeta.setDisplayName("§cThornsword");
+            thornSwordMeta.setUnbreakable(true);
+            thornSwordMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
+            thornSwordMeta.setCustomModelData(1);
+            thornSwordMeta.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+            thornSwordMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE.name(), 130, AttributeModifier.Operation.ADD_NUMBER));
+            thornSword.setItemMeta(thornSwordMeta);
+            player.getInventory().setItem(0, thornSword);
         }
     }
 
@@ -161,6 +182,7 @@ public class Characters implements Listener {
                     player.sendMessage("Ability is on cooldown! " + CooldownManager.getRemainingCooldown(player) / 1000 + " seconds remaining.");
                 }
             }
+
             if (playerCharID == 1) {
                 Location playerLocation = player.getLocation();
                 World world = player.getWorld();
@@ -172,7 +194,7 @@ public class Characters implements Listener {
                     playerLocation = playerLocation.subtract(new Vector(0,1,0));
                 }
 
-                if (!CooldownManager.isOnCooldown(player)) {
+                if (!CooldownManager.isOnCooldown(player) && !player.isSneaking()) {
                     player.setVelocity(player.getVelocity().setY(1.35));
                     Location finalPlayerLocation = playerLocation;
                     new BukkitRunnable() {
