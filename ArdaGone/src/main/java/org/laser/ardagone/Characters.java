@@ -156,7 +156,8 @@ public class Characters implements Listener {
         int playerCharID = getCharacter(player);
 
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if (player.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() != 1) return;
+            ItemStack mainHandItem = player.getInventory().getItemInMainHand();
+            if (mainHandItem == null || mainHandItem.getItemMeta() == null || !mainHandItem.getItemMeta().hasCustomModelData()) return;
 
             if (playerCharID == 0) {
                 if (!CooldownManager.isOnCooldown(player)) {

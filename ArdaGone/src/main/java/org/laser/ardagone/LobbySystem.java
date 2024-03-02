@@ -97,6 +97,7 @@ public class LobbySystem implements CommandExecutor {
         countdownStarted = true;
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             if (countdownSeconds <= 0) {
+                if (!countdownStarted) return; // Check if countdown has already finished
                 Bukkit.broadcastMessage("Countdown finished!");
                 //spawnPoints.randomSpawnAll(playersInLobby); //ERR
                 stopCountdown();
@@ -108,6 +109,7 @@ public class LobbySystem implements CommandExecutor {
             }
         }, 0, 20); // 20 ticks = 1 second
     }
+
 
     // Method to stop the countdown
     private void stopCountdown() {
