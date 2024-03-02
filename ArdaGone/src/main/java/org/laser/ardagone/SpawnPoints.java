@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class SpawnPoints implements CommandExecutor {
 
@@ -68,24 +69,50 @@ public class SpawnPoints implements CommandExecutor {
             player.sendMessage("Spawnpoint " + spawnPoint + " saved.");
             return true;
         } else if (label.equalsIgnoreCase("randomspawn")) {
-            if (spawnConfig.getConfigurationSection("SpawnPoints") == null || spawnConfig.getConfigurationSection("SpawnPoints").getKeys(false).isEmpty()) {
-                player.sendMessage("No spawnpoints saved.");
-                return false;
-            }
-
-            List<String> spawnList = new ArrayList<>(spawnConfig.getConfigurationSection("SpawnPoints").getKeys(false));
-            Random random = new Random();
-            String randomSpawn = spawnList.get(random.nextInt(spawnList.size()));
-            double x = spawnConfig.getDouble("SpawnPoints." + randomSpawn + ".x");
-            double y = spawnConfig.getDouble("SpawnPoints." + randomSpawn + ".y");
-            double z = spawnConfig.getDouble("SpawnPoints." + randomSpawn + ".z");
-
-            player.teleport(new Location(player.getWorld(), x, y, z));
-            player.sendMessage("Teleported to a random spawnpoint.");
+            randomSpawn(player);
             return true;
         }
 
         return false;
+    }
+
+    public void randomSpawn(Player player) {
+        if (spawnConfig.getConfigurationSection("SpawnPoints") == null || spawnConfig.getConfigurationSection("SpawnPoints").getKeys(false).isEmpty()) {
+            player.sendMessage("No spawnpoints saved.");
+            return;
+        }
+
+        List<String> spawnList = new ArrayList<>(spawnConfig.getConfigurationSection("SpawnPoints").getKeys(false));
+        Random random = new Random();
+        String randomSpawn = spawnList.get(random.nextInt(spawnList.size()));
+        double x = spawnConfig.getDouble("SpawnPoints." + randomSpawn + ".x");
+        double y = spawnConfig.getDouble("SpawnPoints." + randomSpawn + ".y");
+        double z = spawnConfig.getDouble("SpawnPoints." + randomSpawn + ".z");
+
+        player.teleport(new Location(player.getWorld(), x, y, z));
+        player.sendMessage("Teleported to a random spawnpoint.");
+    }
+
+
+    public void randomSpawnAll(Set<Player> playersInLobby) {
+        if (spawnConfig.getConfigurationSection("SpawnPoints") == null || spawnConfig.getConfigurationSection("SpawnPoints").getKeys(false).isEmpty()) {
+            for (Player player : playersInLobby) {
+                player.sendMessage("No spawnpoints saved.");
+            }
+            return;
+        }
+
+        List<String> spawnList = new ArrayList<>(spawnConfig.getConfigurationSection("SpawnPoints").getKeys(false));
+        Random random = new Random();
+        String randomSpawn = spawnList.get(random.nextInt(spawnList.size()));
+        double x = spawnConfig.getDouble("SpawnPoints." + randomSpawn + ".x");
+        double y = spawnConfig.getDouble("SpawnPoints." + randomSpawn + ".y");
+        double z = spawnConfig.getDouble("SpawnPoints." + randomSpawn + ".z");
+
+        for (Player player : playersInLobby) {
+            player.teleport(new Location(player.getWorld(), x, y, z));
+            player.sendMessage("Teleported to a random spawnpoint.");
+        }
     }
 
 }
