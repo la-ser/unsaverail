@@ -32,6 +32,7 @@ public final class ArdaGone extends JavaPlugin implements Listener {
     private CharacterManager characterManager;
     private TheFog theFog;
     private SpawnPoints spawnPoints;
+    private  DamageSystem damageSystem;
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
@@ -55,6 +56,8 @@ public final class ArdaGone extends JavaPlugin implements Listener {
         spawnPoints = new SpawnPoints(this);
         getCommand("savespawnpoint").setExecutor(spawnPoints);
         getCommand("randomspawn").setExecutor(spawnPoints);
+
+        damageSystem = new DamageSystem(this);
     }
 
     @Override
