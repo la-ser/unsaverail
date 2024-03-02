@@ -106,7 +106,9 @@ public class Characters implements Listener {
             henrySwordMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
             henrySwordMeta.setCustomModelData(1);
             henrySwordMeta.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+/*
             henrySwordMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE.name(), 230, AttributeModifier.Operation.ADD_NUMBER));
+*/
             henrySword.setItemMeta(henrySwordMeta);
             player.getInventory().setItem(0, henrySword);
 
@@ -132,7 +134,9 @@ public class Characters implements Listener {
             thornSwordMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
             thornSwordMeta.setCustomModelData(1);
             thornSwordMeta.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+/*
             thornSwordMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE.name(), 130, AttributeModifier.Operation.ADD_NUMBER));
+*/
             thornSword.setItemMeta(thornSwordMeta);
             player.getInventory().setItem(0, thornSword);
         }
