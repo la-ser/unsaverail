@@ -57,7 +57,7 @@ public final class ArdaGone extends JavaPlugin implements Listener {
         getCommand("savespawnpoint").setExecutor(spawnPoints);
         getCommand("randomspawn").setExecutor(spawnPoints);
 
-        damageSystem = new DamageSystem(this);
+        damageSystem = new DamageSystem(this, characters);
     }
 
     @Override
