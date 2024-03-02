@@ -160,8 +160,8 @@ public class Characters implements Listener {
 
             if (playerCharID == 0) {
                 if (!CooldownManager.isOnCooldown(player)) {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20 * 5, 2));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 5, 1));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20 * 5, 2), false);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 5, 1), false);
 
                     CooldownManager.setCooldown(player, 7500);
                 } else {
