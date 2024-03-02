@@ -109,8 +109,8 @@ public class LobbySystem implements CommandExecutor, Listener {
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             if (countdownSeconds <= 0) {
                 if (!countdownStarted) return; // Check if countdown has already finished
-                Bukkit.broadcastMessage("Countdown finished!");
-                //spawnPoints.randomSpawnAll(playersInLobby); //ERR
+                Bukkit.broadcastMessage("Countdown finished! All players in the lobby have been teleported.");
+                spawnPoints.randomSpawnAll(playersInLobby);
                 stopCountdown();
             } else {
                 if (countdownSeconds == 60 || countdownSeconds <= 15) {
@@ -172,6 +172,22 @@ public class LobbySystem implements CommandExecutor, Listener {
         arrowItemMeta.setDisplayName("§r§7next page");
         arrowItem.setItemMeta(arrowItemMeta);
         lobbyGUI.setItem(44, arrowItem);
+
+        //chars
+        int[] char1Slots = {10,11,12};
+        ItemStack charPlace1 = new ItemStack(Material.PLAYER_HEAD);
+        ItemMeta charPlace1Meta = charPlace1.getItemMeta();
+        charPlace1Meta.setDisplayName("Unlocked Character");
+        charPlace1.setItemMeta(charPlace1Meta);
+        setPlaceholderItemsInSlots(lobbyGUI, charPlace1, char1Slots);
+
+        //chars
+        int[] char2Slots = {13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34};
+        ItemStack charPlace2 = new ItemStack(Material.ZOMBIE_HEAD);
+        ItemMeta charPlace2Meta = charPlace2.getItemMeta();
+        charPlace2Meta.setDisplayName("Locked Character");
+        charPlace2.setItemMeta(charPlace2Meta);
+        setPlaceholderItemsInSlots(lobbyGUI, charPlace2, char2Slots);
 
         player.openInventory(lobbyGUI);
     }
