@@ -7,16 +7,18 @@ import org.bukkit.inventory.ItemStack;
 
 public class DamageSystem {
     private final ArdaGone plugin;
+    private final Characters characters;
 
     public DamageSystem(ArdaGone plugin, Characters characters) {
         this.plugin = plugin;
+        this.characters = characters;
     }
 
     @EventHandler
     public void onPlayerAttack(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
             Player player = (Player) event.getDamager();
-            int playerCharID = getCharacter(player);
+            int playerCharID = characters.getCharacter(player);
             ItemStack weapon = player.getInventory().getItemInMainHand();
 
             /*if (weapon.getType().equals(Material.WOODEN_SWORD) && weapon.getItemMeta().getCustomModelData() == 1) {
