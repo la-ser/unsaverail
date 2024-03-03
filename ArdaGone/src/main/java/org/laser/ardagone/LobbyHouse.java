@@ -46,7 +46,6 @@ public class LobbyHouse implements Listener {
         World world = player.getWorld();
         Location houseLocation = findFreeLocation(world);
         if (houseLocation != null) {
-            // Generate the structure block at the house location
             Location structureBlockLocation = new Location(world, houseLocation.getX(), houseLocation.getY() + 1, houseLocation.getZ());
             structureBlockLocation.getBlock().setType(Material.STRUCTURE_BLOCK);
             BlockState blockState = structureBlockLocation.getBlock().getState();
@@ -57,7 +56,7 @@ public class LobbyHouse implements Listener {
                 structureBlock.update();
             }
 
-            houseLocation.getBlock().setType(Material.AIR);
+            houseLocation.getBlock().setType(Material.AIR); // nerviges blockupdate
             houseLocation.getBlock().setType(Material.REDSTONE_BLOCK);
 
             Location playerHouseLocation = houseLocation.clone().add(new Vector(11, 2, 11.5));
@@ -65,7 +64,6 @@ public class LobbyHouse implements Listener {
             playerHouseLocation.setPitch(0);
             player.teleport(playerHouseLocation);
 
-            // Save house location to config
             String path = "houses." + world.getName() + "." + houseLocation.getBlockX() + "." + houseLocation.getBlockY() + "." + houseLocation.getBlockZ();
             config.set(path, player.getUniqueId().toString());
             saveConfig();
