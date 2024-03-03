@@ -7,6 +7,7 @@ import org.bukkit.World;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Structure;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,11 +22,11 @@ import java.io.IOException;
 
 public class LobbyHouse implements Listener {
     private final Plugin plugin;
-    private final FileConfiguration config;
+    private FileConfiguration config;
 
     public LobbyHouse(Plugin plugin) {
         this.plugin = plugin;
-        this.config = plugin.getConfig();
+        reloadConfig();
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -101,6 +102,7 @@ public class LobbyHouse implements Listener {
                                             houseLocation.getBlock().setType(Material.REDSTONE_BLOCK);
                                             config.set("houses." + worldName + "." + xStr + "." + yStr + "." + zStr, null);
                                             saveConfig();
+                                            Bukkit.broadcastMessage("house deleted!");
                                             return;
                                         }
                                     }
@@ -130,6 +132,16 @@ public class LobbyHouse implements Listener {
             config.save(new File(plugin.getDataFolder(), "houses.yml"));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void reloadConfig() {
+        File configFile = new File(plugin.getDataFolder(), "houses.yml");
+        config = plugin.getConfig();
+        if (!configFile.exists()) {
+            plugin.saveResource("houses.yml", false);
+        } else {
+            config = YamlConfiguration.loadConfiguration(configFile);
         }
     }
 }
