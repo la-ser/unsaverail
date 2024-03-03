@@ -5,46 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b6ff7c0b-2213-46a3-b996-d2e58b02fd70" name="Changes" comment="Changed made by laser">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArdaGone.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ArdaGone.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/ArdaGone-1.20.4-shaded.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/ArdaGone-1.20.4.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/characteritems.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dialogues.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gamespawn.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/guis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/interactionblocks.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lootboxes.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/money.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/ArdaGone$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/ArdaGone.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/CharacterManager$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/CharacterManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/Characters$1$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/Characters$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/Characters$CooldownManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/Characters.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/DamageSystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/LobbySystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/PConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/SpawnPoints.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/TheFog$CircleProperties.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/TheFog.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/parties.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/placeholder.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/prices.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/signs.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/status.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/original-ArdaGone-1.20.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbyHouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbyHouse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ArdaGone-1.20.4-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/ArdaGone-1.20.4-shaded.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ArdaGone-1.20.4.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/ArdaGone-1.20.4.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/original-ArdaGone-1.20.4.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-ArdaGone-1.20.4.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,25 +40,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Maven.ArdaGone [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ArdaGone [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ArdaGone [org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ArdaGone [org.apache.maven.plugins:maven-deploy-plugin:3.1.1:deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ArdaGone [org.apache.maven.plugins:maven-jar-plugin:3.3.0:jar].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/unkno/Documents/GitHub/ardagone/ArdaGone&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.ArdaGone [clean].executor": "Run",
+    "Maven.ArdaGone [compile].executor": "Run",
+    "Maven.ArdaGone [org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile].executor": "Run",
+    "Maven.ArdaGone [org.apache.maven.plugins:maven-deploy-plugin:3.1.1:deploy].executor": "Run",
+    "Maven.ArdaGone [org.apache.maven.plugins:maven-jar-plugin:3.3.0:jar].executor": "Run",
+    "Maven.ArdaGone [package].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/unkno/Documents/GitHub/ardagone/ArdaGone",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="ArdaGone [package]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
       <MavenSettings>
@@ -143,7 +109,23 @@
       <option name="project" value="LOCAL" />
       <updated>1709467496179</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Changed made by laser">
+      <option name="closed" value="true" />
+      <created>1709468455174</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1709468455174</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Changed made by laser">
+      <option name="closed" value="true" />
+      <created>1709468458326</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1709468458326</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
