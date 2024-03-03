@@ -58,7 +58,7 @@ public class LobbySystem implements CommandExecutor, Listener {
                     player.sendMessage("Player not found.");
                 }
             } else {
-                player.sendMessage("Usage: /join [player]"); // wann kommt diese nachricht
+                player.sendMessage("Usage: /join [player]");
             }
         } else if (command.getName().equalsIgnoreCase("leave")) {
             if (args.length == 0) {
@@ -72,7 +72,7 @@ public class LobbySystem implements CommandExecutor, Listener {
                     player.sendMessage("Player not found.");
                 }
             } else {
-                player.sendMessage("Usage: /leave [player]"); // oder das
+                player.sendMessage("Usage: /leave [player]");
             }
         } else if (command.getName().equalsIgnoreCase("gui")) {
             openLobbyGUI(player);
@@ -107,12 +107,11 @@ public class LobbySystem implements CommandExecutor, Listener {
     private void startCountdown() {
         countdownStarted = true;
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
-            if (countdownSeconds <= 0 || playersInLobby.size() == 8) {
+            if (countdownSeconds <= 0) {
                 if (!countdownStarted) return; // Check if countdown has already finished
-                Bukkit.broadcastMessage("Countdown finished or lobby is full!");
-                spawnPoints.randomSpawnAll(playersInLobby); // Teleport all players to random spawn points
+                Bukkit.broadcastMessage("Countdown finished! All players in the lobby have been teleported.");
+                spawnPoints.randomSpawnAll(playersInLobby);
                 stopCountdown();
-                // Add additional actions here
             } else {
                 if (countdownSeconds == 60 || countdownSeconds <= 15) {
                     Bukkit.broadcastMessage("Countdown: " + countdownSeconds + " seconds remaining.");
@@ -129,8 +128,7 @@ public class LobbySystem implements CommandExecutor, Listener {
         //countdownSeconds = 60; // Reset countdown time
     }
 
-
-        // LOBBY GUI
+    // LOBBY GUI
     private final String lobbyGUITitle = "§6§lArdaGone";
     public void openLobbyGUI(Player player) {
         Inventory lobbyGUI = Bukkit.createInventory(null, 9*5, lobbyGUITitle);
@@ -174,6 +172,22 @@ public class LobbySystem implements CommandExecutor, Listener {
         arrowItemMeta.setDisplayName("§r§7next page");
         arrowItem.setItemMeta(arrowItemMeta);
         lobbyGUI.setItem(44, arrowItem);
+
+        //chars
+        int[] char1Slots = {10,11,12};
+        ItemStack charPlace1 = new ItemStack(Material.PLAYER_HEAD);
+        ItemMeta charPlace1Meta = charPlace1.getItemMeta();
+        charPlace1Meta.setDisplayName("Unlocked Character");
+        charPlace1.setItemMeta(charPlace1Meta);
+        setPlaceholderItemsInSlots(lobbyGUI, charPlace1, char1Slots);
+
+        //chars
+        int[] char2Slots = {13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34};
+        ItemStack charPlace2 = new ItemStack(Material.ZOMBIE_HEAD);
+        ItemMeta charPlace2Meta = charPlace2.getItemMeta();
+        charPlace2Meta.setDisplayName("Locked Character");
+        charPlace2.setItemMeta(charPlace2Meta);
+        setPlaceholderItemsInSlots(lobbyGUI, charPlace2, char2Slots);
 
         player.openInventory(lobbyGUI);
     }
