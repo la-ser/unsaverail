@@ -5,24 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b6ff7c0b-2213-46a3-b996-d2e58b02fd70" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/ardagone.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArdaGone.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ArdaGone.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/SpawnPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/SpawnPoints.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbyHouse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/houses.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/ArdaGone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/ArdaGone.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -30,9 +28,9 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="ProjectErrors" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2d8N1lzhFFPRSzjwuxAhpmlFxxy" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -81,23 +79,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-field">
-          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/ArdaGone.java</url>
-          <line>32</line>
-          <properties field="theFog" class="org.laser.ardagone.ArdaGone" />
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-field">
-          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/ArdaGone.java</url>
-          <line>33</line>
-          <properties field="spawnPoints" class="org.laser.ardagone.ArdaGone" />
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/ArdaGone.java</url>
-          <line>28</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/CharacterManager.java</url>
           <line>274</line>
