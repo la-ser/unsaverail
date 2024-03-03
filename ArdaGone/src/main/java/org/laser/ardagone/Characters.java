@@ -1,5 +1,6 @@
 package org.laser.ardagone;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -7,6 +8,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -26,7 +28,7 @@ import org.bukkit.util.Vector;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.*;
 
 public class Characters implements Listener {
 
@@ -69,6 +71,9 @@ public class Characters implements Listener {
         } else if (charID == 2) {
             player.sendMessage("You have selected 'Thorn'!");
             characterSection.set(player.getUniqueId().toString(), 2);
+        } else if (charID == 3) {
+            player.sendMessage("You have selected 'Batty'!");
+            characterSection.set(player.getUniqueId().toString(), 3);
         }
         else {
             player.sendMessage("Err selecting character!");
@@ -139,6 +144,21 @@ public class Characters implements Listener {
 */
             thornSword.setItemMeta(thornSwordMeta);
             player.getInventory().setItem(0, thornSword);
+        } else if (charID == 3) {
+
+            setPlayerHealth(player, 850);
+            ItemStack bettyBat = new ItemStack(Material.STICK);
+            ItemMeta bettyBatMeta = bettyBat.getItemMeta();
+            bettyBatMeta.setDisplayName("§7Batty's Bat");
+            bettyBatMeta.setUnbreakable(true);
+            bettyBatMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
+            bettyBatMeta.setCustomModelData(1);
+            bettyBatMeta.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+/*
+            thornSwordMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE.name(), 130, AttributeModifier.Operation.ADD_NUMBER));
+*/
+            bettyBat.setItemMeta(bettyBatMeta);
+            player.getInventory().setItem(0, bettyBat);
         }
     }
 
@@ -213,6 +233,21 @@ public class Characters implements Listener {
                 } else {
                     player.sendMessage("Ability is on cooldown! " + CooldownManager.getRemainingCooldown(player) / 1000 + " seconds remaining.");
                 }
+            } else if (playerCharID == 2) {
+                if (!CooldownManager.isOnCooldown(player)) {
+                    player.sendMessage("Thats too thorny!");
+                    CooldownManager.setCooldown(player, 7500);
+                } else {
+                    player.sendMessage("Ability is on cooldown! " + CooldownManager.getRemainingCooldown(player) / 1000 + " seconds remaining.");
+                }
+            } else if (playerCharID == 3) {
+                if (!CooldownManager.isOnCooldown(player)) {
+                    player.sendMessage("Some bats would be spawning now.");
+
+                    CooldownManager.setCooldown(player, 7500);
+                } else {
+                    player.sendMessage("Ability is on cooldown! " + CooldownManager.getRemainingCooldown(player) / 1000 + " seconds remaining.");
+                }
             }
         }
     }
@@ -247,5 +282,4 @@ public class Characters implements Listener {
             return 0;
         }
     }
-
 }
