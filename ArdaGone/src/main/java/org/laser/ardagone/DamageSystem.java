@@ -1,6 +1,7 @@
 package org.laser.ardagone;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,6 +22,8 @@ public class DamageSystem implements Listener {
     @EventHandler
     public void onPlayerAttack(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
+            if (event.getEntity().isInvulnerable()) return;
+
             Player player = (Player) event.getDamager();
             Player targetPlayer = (Player) event.getEntity();
             int playerCharID = characters.getCharacter(player);
