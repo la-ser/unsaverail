@@ -12,6 +12,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -27,11 +28,13 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class LobbyHouse implements Listener {
-    private final Plugin plugin;
+    private final ArdaGone plugin;
+    private CharacterManager characterManager;
     private FileConfiguration config;
 
-    public LobbyHouse(Plugin plugin) {
+    public LobbyHouse(ArdaGone plugin, CharacterManager characterManager) {
         this.plugin = plugin;
+        this.characterManager = characterManager;
         reloadConfig();
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
@@ -150,17 +153,23 @@ public class LobbyHouse implements Listener {
         ArmorStand armorStand = location.getWorld().spawn(armorstandSpawnLocation, ArmorStand.class);
         armorStand.setCustomName("§r§e" + player.getName() + "'s House");
         armorStand.setCustomNameVisible(true);
-        ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
+        /*ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta playerHeadMeta = (SkullMeta) playerHead.getItemMeta();
         playerHeadMeta.setOwningPlayer(player);
         playerHead.setItemMeta(playerHeadMeta);
-        armorStand.setHelmet(playerHead);
+        armorStand.setHelmet(playerHead);*/
+        ItemStack characterItem = new ItemStack(Material.CARROT_ON_A_STICK);
+        ItemMeta characterItemMeta = characterItem.getItemMeta();
+        characterItemMeta.setCustomModelData(200);
+        characterItem.setItemMeta(characterItemMeta);
+        armorStand.setHelmet(characterItem);
         armorStand.setBasePlate(false);
         armorStand.setVisible(false);
         armorStand.setSmall(false);
         armorStand.setGravity(false);
         armorStand.setInvulnerable(true);
         armorStand.addEquipmentLock(EquipmentSlot.HEAD, ArmorStand.LockType.REMOVING_OR_CHANGING);
+        armorStand.addScoreboardTag("character_selector");
 
         // Save armor stand UUID to config
         String path = "houses." + location.getWorld().getName() + "." + location.getBlockX() + "." + location.getBlockY() + "." + location.getBlockZ() + ".armorstand";
@@ -223,6 +232,17 @@ public class LobbyHouse implements Listener {
             plugin.saveResource("houses.yml", false);
         } else {
             config = YamlConfiguration.loadConfiguration(configFile);
+        }
+    }
+
+    @EventHandler
+    public void onArmorStandClick(PlayerInteractAtEntityEvent event) {
+        if (event.getRightClicked() instanceof ArmorStand) {
+            ArmorStand clickedArmorStand = (ArmorStand) event.getRightClicked();
+            if (clickedArmorStand.getScoreboardTags().contains("character_selector")) {
+                Player player = event.getPlayer();
+                characterManager.openUnlockedCharactersGUI(player);
+            }
         }
     }
 }

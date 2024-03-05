@@ -334,12 +334,12 @@ public class CharacterManager implements CommandExecutor, Listener, TabCompleter
                         }
                         unlockedCharacterGUI.addItem(iconItem);
                     } else {
-                        ItemStack lockedItem = ArdaGone.getHeadFromURL(ChatColor.DARK_GRAY + "???", "http://textures.minecraft.net/texture/da99b05b9a1db4d29b5e673d77ae54a77eab66818586035c8a2005aeb810602a");
+                        ItemStack lockedItem = ArdaGone.getHeadUpdated(ChatColor.DARK_GRAY + "???", "http://textures.minecraft.net/texture/da99b05b9a1db4d29b5e673d77ae54a77eab66818586035c8a2005aeb810602a");
                         unlockedCharacterGUI.addItem(lockedItem);
                     }
                 }
             } else {
-                ItemStack comingSoonItem = ArdaGone.getHeadFromURL(ChatColor.RED + "Coming Soon", "http://textures.minecraft.net/texture/1f575bb54a2e9133aaa1310a14642f78a014fcc9360774171663d34db236ccc4");
+                ItemStack comingSoonItem = ArdaGone.getHeadUpdated(ChatColor.RED + "Coming Soon", "http://textures.minecraft.net/texture/1f575bb54a2e9133aaa1310a14642f78a014fcc9360774171663d34db236ccc4");
                 unlockedCharacterGUI.addItem(comingSoonItem);
             }
 

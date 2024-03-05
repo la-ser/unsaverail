@@ -6,11 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="b6ff7c0b-2213-46a3-b996-d2e58b02fd70" name="Changes" comment="Changed made by laser">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/DamageSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/DamageSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/ArdaGone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/ArdaGone.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/CharacterManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/CharacterManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbyHouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbyHouse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/ArdaGone-1.20.4-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/ArdaGone-1.20.4-shaded.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/ArdaGone-1.20.4.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/ArdaGone-1.20.4.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/DamageSystem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/laser/ardagone/DamageSystem.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/LobbyHouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/laser/ardagone/LobbyHouse.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/original-ArdaGone-1.20.4.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-ArdaGone-1.20.4.jar" afterDir="false" />
     </list>
@@ -160,7 +160,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709478872483</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Changed made by laser">
+      <option name="closed" value="true" />
+      <created>1709567337695</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1709567337695</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -183,31 +191,5 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Changed made by laser" />
     <option name="LAST_COMMIT_MESSAGE" value="Changed made by laser" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/CharacterManager.java</url>
-          <line>274</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/CharacterManager.java</url>
-          <line>275</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java</url>
-          <line>60</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java</url>
-          <line>74</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

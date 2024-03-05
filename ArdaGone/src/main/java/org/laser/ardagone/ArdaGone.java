@@ -63,7 +63,7 @@ public final class ArdaGone extends JavaPlugin implements Listener {
 
         lobbySystem = new LobbySystem(this,spawnPoints);
 
-        lobbyHouse = new LobbyHouse(this);
+        lobbyHouse = new LobbyHouse(this, characterManager);
     }
 
     @Override
@@ -158,6 +158,31 @@ public final class ArdaGone extends JavaPlugin implements Listener {
         stack.setItemMeta(meta);
 
         return stack;
+    }
+
+    public static ItemStack getHeadUpdated(String displayName, String texture) {
+        ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
+
+        GameProfile gameProfile = new GameProfile(UUID.randomUUID(), "playerName");
+        String textureString = "{textures:{SKIN:{url:\"http://textures.minecraft.net/texture/" + texture + "\"}}}";
+        String base64Texture = Base64.getEncoder().encodeToString(textureString.getBytes());
+        gameProfile.getProperties().put("textures", new Property("textures", base64Texture));
+
+        Field profileField;
+        try {
+            profileField = skullMeta.getClass().getDeclaredField("profile");
+            profileField.setAccessible(true);
+            profileField.set(skullMeta, gameProfile);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e1) {
+            e1.printStackTrace();
+        }
+
+        itemStack.setItemMeta(skullMeta);
+        ItemMeta itemStackMeta = itemStack.getItemMeta();
+        itemStackMeta.setDisplayName(displayName);
+        itemStack.setItemMeta(itemStackMeta);
+        return itemStack;
     }
 
     public static ItemStack getPlayerHead(String playerName, String headName) {
