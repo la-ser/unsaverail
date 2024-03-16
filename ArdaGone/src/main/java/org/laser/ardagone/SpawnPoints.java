@@ -94,7 +94,7 @@ public class SpawnPoints implements CommandExecutor {
     }
 
 
-    public void randomSpawnAll(Set<Player> playersInLobby) { // hier müssen wir einen fehler finden
+    public void randomSpawnAll(Set<Player> playersInLobby) {
         if (spawnConfig.getConfigurationSection("SpawnPoints") == null || spawnConfig.getConfigurationSection("SpawnPoints").getKeys(false).isEmpty()) {
             for (Player player : playersInLobby) {
                 player.sendMessage("No spawnpoints saved.");

@@ -33,7 +33,7 @@ public class TheFog implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length < 1 || args.length > 3) {
-            sender.sendMessage("Usage: /fornite <radius> [durationInSeconds]");
+            sender.sendMessage("Usage: /zone <radius> [durationInSeconds]");
             return true;
         }
 
@@ -149,8 +149,12 @@ public class TheFog implements CommandExecutor {
                 for (double theta = 0; theta <= 2 * Math.PI; theta += Math.PI / 180) {
                     double x = center.getX() + radius * Math.cos(theta);
                     double z = center.getZ() + radius * Math.sin(theta);
-                    Location borderLocation = new Location(center.getWorld(), x, center.getY(), z);
-                    player.getWorld().spawnParticle(Particle.SPELL_MOB, borderLocation, 1);
+
+                    // Adjusting Y-coordinate to make particles spawn up to 2 blocks high
+                    for (double y = center.getY(); y <= center.getY() + 2; y++) {
+                        Location borderLocation = new Location(center.getWorld(), x, y, z);
+                        player.getWorld().spawnParticle(Particle.SPELL_MOB, borderLocation, 1);
+                    }
                 }
 
                 stepCounter++;
