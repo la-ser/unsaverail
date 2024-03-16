@@ -163,6 +163,7 @@ public class TheFog implements CommandExecutor {
             }, 0, duration * 20L / steps);
         }
 
+
         public void stopCircle() {
             if (task != null) {
                 task.cancel();
