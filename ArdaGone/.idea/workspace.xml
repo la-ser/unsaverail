@@ -4,36 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6ff7c0b-2213-46a3-b996-d2e58b02fd70" name="Changes" comment="Changed made by laser">
+    <list default="true" id="b6ff7c0b-2213-46a3-b996-d2e58b02fd70" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/ArdaGone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/ArdaGone.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/CharacterManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/CharacterManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbyHouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbyHouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/ArdaGone-1.20.4-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/ArdaGone-1.20.4-shaded.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/ArdaGone-1.20.4.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/ArdaGone-1.20.4.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/LobbyHouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/laser/ardagone/LobbyHouse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/original-ArdaGone-1.20.4.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-ArdaGone-1.20.4.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/SpawnPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/SpawnPoints.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/TheFog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/TheFog.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="ProjectErrors" />
-  </component>
-  <component name="ProjectCodeStyleSettingsMigration">
-    <option name="version" value="2" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -45,56 +31,16 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;Maven.ArdaGone [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ArdaGone [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ArdaGone [org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ArdaGone [org.apache.maven.plugins:maven-deploy-plugin:3.1.1:deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ArdaGone [org.apache.maven.plugins:maven-jar-plugin:3.3.0:jar].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ArdaGone [package].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/unkno/Documents/GitHub/ardagone/ArdaGone&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
   }
 }</component>
-  <component name="RunManager">
-    <configuration name="ArdaGone [package]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
-      <MavenSettings>
-        <option name="myGeneralSettings" />
-        <option name="myRunnerSettings" />
-        <option name="myRunnerParameters">
-          <MavenRunnerParameters>
-            <option name="cmdOptions" />
-            <option name="profiles">
-              <set />
-            </option>
-            <option name="goals">
-              <list>
-                <option value="package" />
-              </list>
-            </option>
-            <option name="multimoduleDir" />
-            <option name="pomFileName" />
-            <option name="profilesMap">
-              <map />
-            </option>
-            <option name="projectsCmdOptionValues">
-              <list />
-            </option>
-            <option name="resolveToWorkspace" value="false" />
-            <option name="workingDirPath" value="$PROJECT_DIR$" />
-          </MavenRunnerParameters>
-        </option>
-      </MavenSettings>
-      <method v="2" />
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -104,71 +50,6 @@
       <option name="presentableId" value="Default" />
       <updated>1709385533124</updated>
     </task>
-    <task id="LOCAL-00001" summary="Changed made by laser">
-      <option name="closed" value="true" />
-      <created>1709467496179</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1709467496179</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Changed made by laser">
-      <option name="closed" value="true" />
-      <created>1709468455174</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1709468455174</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Changed made by laser">
-      <option name="closed" value="true" />
-      <created>1709468458326</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1709468458326</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Changed made by laser">
-      <option name="closed" value="true" />
-      <created>1709472977249</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1709472977249</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Changed made by laser">
-      <option name="closed" value="true" />
-      <created>1709472983757</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1709472983757</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Changed made by laser">
-      <option name="closed" value="true" />
-      <created>1709477885917</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1709477885917</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Changed made by laser">
-      <option name="closed" value="true" />
-      <created>1709478872483</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1709478872483</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Changed made by laser">
-      <option name="closed" value="true" />
-      <created>1709567337695</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1709567337695</updated>
-    </task>
-    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -188,8 +69,34 @@
       </map>
     </option>
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Changed made by laser" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed made by laser" />
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java</url>
+          <line>60</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java</url>
+          <line>74</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java</url>
+          <line>109</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java</url>
+          <line>106</line>
+          <properties class="org.laser.ardagone.LobbySystem" method="startCountdown">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -87,7 +87,7 @@ public class LobbySystem implements CommandExecutor, Listener {
         player.sendMessage("You joined the lobby.");
 
         // Check if there are at least two players to start the countdown
-        if (playersInLobby.size() >= 2 && !countdownStarted) {
+        if (playersInLobby.size() >= 1 && !countdownStarted) {
             startCountdown();
         }
     }
