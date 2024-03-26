@@ -11,6 +11,7 @@ commands:
   selectcharacter:
   getchar:
   zone:
+  modifyzone:
   stopfog:
   startfog:
   savespawnpoint:

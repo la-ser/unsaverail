@@ -2,11 +2,14 @@ org\laser\ardagone\ArdaGone$1.class
 org\laser\ardagone\DamageSystem.class
 org\laser\ardagone\SpawnPoints.class
 org\laser\ardagone\LobbySystem.class
+org\laser\ardagone\TheFog$2.class
 org\laser\ardagone\CharacterManager$1.class
 org\laser\ardagone\TheFog.class
 org\laser\ardagone\ArdaGone.class
 org\laser\ardagone\Characters.class
 org\laser\ardagone\LobbyHouse.class
+org\laser\ardagone\TheFog$1.class
+org\laser\ardagone\TheFog$ZoneData.class
 org\laser\ardagone\CharacterManager.class
 org\laser\ardagone\Characters$1$1.class
 org\laser\ardagone\Characters$CooldownManager.class

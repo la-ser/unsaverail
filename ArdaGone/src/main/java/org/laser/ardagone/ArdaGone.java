@@ -54,7 +54,8 @@ public final class ArdaGone extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(characterManager, this);
 
         theFog = new TheFog(this);
-        getCommand("zone").setExecutor((CommandExecutor) theFog);
+        getCommand("zone").setExecutor(theFog);
+        getCommand("modifyzone").setExecutor(theFog);
 
         spawnPoints = new SpawnPoints(this);
         getCommand("savespawnpoint").setExecutor(spawnPoints);
