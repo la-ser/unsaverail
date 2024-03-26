@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,7 +54,7 @@ public final class ArdaGone extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(characterManager, this);
 
         theFog = new TheFog(this);
-        getCommand("fornite").setExecutor(theFog);
+        getCommand("zone").setExecutor((CommandExecutor) theFog);
 
         spawnPoints = new SpawnPoints(this);
         getCommand("savespawnpoint").setExecutor(spawnPoints);

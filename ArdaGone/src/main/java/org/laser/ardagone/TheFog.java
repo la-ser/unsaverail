@@ -3,171 +3,110 @@ package org.laser.ardagone;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.World;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
-public class TheFog implements CommandExecutor {
+public class TheFog extends JavaPlugin {
 
     private final ArdaGone plugin;
-
-    private final Map<Player, CircleProperties> circleMap = new HashMap<>();
+    private Map<Integer, Double> circles = new HashMap<>(); // Map to store circle IDs and their corresponding radius
 
     public TheFog(ArdaGone plugin) {
         this.plugin = plugin;
     }
 
+    // warum no usages?
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        // Check if the command sender is a player
-        if (!(sender instanceof Player)) {
-            sender.sendMessage("Only players can execute this command.");
-            return true;
-        }
+    public void onEnable() {
 
-        Player player = (Player) sender;
+        Bukkit.getScheduler().runTaskTimer(this, this::updateZone, 0, 20);
 
-        if (args.length < 1 || args.length > 3) {
-            sender.sendMessage("Usage: /zone <radius> [durationInSeconds]");
-            return true;
-        }
-
-        if (args[0].equalsIgnoreCase("false")) {
-            removeCircle(player);
-            sender.sendMessage("Circle removed.");
-            return true;
-        }
-
-        int radius;
-        try {
-            radius = Integer.parseInt(args[0]);
-        } catch (NumberFormatException e) {
-            sender.sendMessage("Invalid radius. Please specify a number.");
-            return true;
-        }
-
-        int duration = args.length > 1 ? Integer.parseInt(args[1]) : 0;
-        int steps = args.length == 3 ? Integer.parseInt(args[2]) : 100; // Default number of steps for the transition
-
-        CircleProperties circle = circleMap.get(player);
-        if (circle == null) {
-            // Display circle without duration
-            displayCircle(player, radius, duration, steps);
-            sender.sendMessage("Circle with radius " + radius + " created.");
-        } else {
-            // Update existing circle
-            circle.updateCircle(radius, duration, steps);
-            sender.sendMessage("Circle updated: Radius " + radius + ", Duration " + duration + " seconds.");
-        }
-
-        return true;
     }
 
-    private void displayCircle(Player player, int radius, int duration, int steps) {
-        Location center = player.getLocation();
 
-        CircleProperties circle = circleMap.get(player);
-        if (circle == null) {
-            circle = new CircleProperties(radius, center, plugin, duration, steps);
-            circleMap.put(player, circle);
-        } else {
-            circle.updateCircle(radius, duration, steps);
-        }
+    private void updateZone() {
 
-        circle.startCircle();
-    }
+        World world = Bukkit.getWorlds().get(0);
 
-    private void removeCircle(Player player) {
-        CircleProperties circle = circleMap.remove(player);
-        if (circle != null) {
-            circle.stopCircle();
-        }
-    }
+        Iterator<Map.Entry<Integer, Double>> iterator = circles.entrySet().iterator();
 
-    private static class CircleProperties {
-        private final ArdaGone plugin;
-        private final Player player;
-        private int radius;
-        private Location center;
-        private int duration;
-        private int steps;
-        private int stepCounter;
-        private double deltaRadius;
-        private double deltaPosX;
-        private double deltaPosZ;
-        private double initialRadius;
-        private double initialPosX;
-        private double initialPosZ;
-        private Location targetLocation;
-        private BukkitTask task;
+        while (iterator.hasNext()) {
 
-        public CircleProperties(int radius, Location center, ArdaGone plugin, int duration, int steps) {
-            this.plugin = plugin;
-            this.radius = radius;
-            this.initialRadius = radius;
-            this.center = center;
-            this.initialPosX = center.getX();
-            this.initialPosZ = center.getZ();
-            this.player = center.getWorld().getPlayers().get(0); // Just for initializing player
-            this.duration = duration;
-            this.steps = steps;
-            this.stepCounter = 0;
-            this.deltaRadius = (double) (radius - initialRadius) / steps;
-            this.targetLocation = center.clone(); // Initialize targetLocation with center
-        }
+            Map.Entry<Integer, Double> entry = iterator.next();
+            double radius = entry.getValue();
+            radius -= 0.5; // decrement
 
-        public void updateCircle(int newRadius, int newDuration, int newSteps) {
-            if (task != null) {
-                task.cancel();
+
+            if (radius <= 0) {
+                iterator.remove(); // das nicht weitere Effekte entstehen hoffe ich
+            } else {
+                entry.setValue(radius);
             }
-            this.radius = newRadius;
-            this.initialRadius = radius;
-            this.duration = newDuration;
-            this.steps = newSteps;
-            this.stepCounter = 0;
-            this.deltaRadius = (double) (newRadius - initialRadius) / steps;
-            this.targetLocation = center.clone(); // Update targetLocation with center
-            startCircle();
         }
 
-        public void startCircle() {
-            this.deltaPosX = (targetLocation.getX() - initialPosX) / steps;
-            this.deltaPosZ = (targetLocation.getZ() - initialPosZ) / steps;
+        int newCircleId = circles.size() + 1;
+        circles.put(newCircleId, 5.0);
+        drawCircle(world, newCircleId, new Location(world, 0, 100, 0), 5, 20);
 
-            task = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
-                if (stepCounter >= steps) {
-                    center = targetLocation.clone();
-                    stopCircle();
-                    return;
-                }
+    }
 
-                for (double theta = 0; theta <= 2 * Math.PI; theta += Math.PI / 180) {
-                    double x = center.getX() + radius * Math.cos(theta);
-                    double z = center.getZ() + radius * Math.sin(theta);
-
-                    // Adjusting Y-coordinate to make particles spawn up to 2 blocks high
-                    for (double y = center.getY(); y <= center.getY() + 2; y++) {
-                        Location borderLocation = new Location(center.getWorld(), x, y, z);
-                        player.getWorld().spawnParticle(Particle.SPELL_MOB, borderLocation, 1);
-                    }
-                }
-
-                stepCounter++;
-                radius += deltaRadius;
-                center.add(deltaPosX, 0, deltaPosZ);
-            }, 0, duration * 20L / steps);
+    private void drawCircle(World world, int circleId, Location center, double radius, int points) {
+        double increment = (2 * Math.PI) / points;
+        for (int i = 0; i < points; i++) {
+            double angle = i * increment;
+            double x = center.getX() + (radius * Math.cos(angle));
+            double z = center.getZ() + (radius * Math.sin(angle));
+            Location loc = new Location(world, x, center.getY(), z);
+            world.spawnParticle(Particle.CLOUD, loc, 1);
         }
+    }
 
+    // clear all
+    private void clearAllParticleEffects() {
+        World world = Bukkit.getWorlds().get(0);
 
-        public void stopCircle() {
-            if (task != null) {
-                task.cancel();
+        for (int circleId : circles.keySet()) {
+
+            for (int i = 0; i < 360; i += 10) { // Increase the step value to clear more particles
+
+                double angle = Math.toRadians(i);
+                double x = circles.get(circleId) * Math.cos(angle);
+                double z = circles.get(circleId) * Math.sin(angle);
+                Location loc = new Location(world, x, 100, z);
+                world.spawnParticle(Particle.CLOUD, loc, 1); // verstehe ich nicht
+
             }
         }
     }
+
+
+    /*
+
+    private boolean isInZone(Location location) {
+    for (double radius : circles.values()) {
+        double distanceSquared = location.distanceSquared(new Location(location.getWorld(), 0, 100, 0)); // Assuming the center of the zone is at (0, 100, 0)
+        if (distanceSquared <= radius * radius) {
+            return true; // Spieler ist in der Zone
+        }
+    }
+    return false; // Spieler ist außerhalb der Zone
+}
+
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        Player player = event.getPlayer();
+        Location playerLocation = player.getLocation();
+        if (isInZone(playerLocation)) {
+            // Spieler ist in der Zone
+        } else {
+            // Spieler ist außerhalb der Zone
+        }
+    }
+
+     */
 }

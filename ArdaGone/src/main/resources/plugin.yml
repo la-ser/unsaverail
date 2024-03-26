@@ -10,7 +10,9 @@ commands:
   character:
   selectcharacter:
   getchar:
-  fornite:
+  zone:
+  stopfog:
+  startfog:
   savespawnpoint:
   randomspawn:
   join:

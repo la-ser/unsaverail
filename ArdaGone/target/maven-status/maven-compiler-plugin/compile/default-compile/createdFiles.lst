@@ -1,7 +1,6 @@
 org\laser\ardagone\ArdaGone$1.class
 org\laser\ardagone\DamageSystem.class
 org\laser\ardagone\SpawnPoints.class
-org\laser\ardagone\TheFog$CircleProperties.class
 org\laser\ardagone\LobbySystem.class
 org\laser\ardagone\CharacterManager$1.class
 org\laser\ardagone\TheFog.class
