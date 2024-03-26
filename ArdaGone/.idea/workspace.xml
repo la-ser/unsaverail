@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6ff7c0b-2213-46a3-b996-d2e58b02fd70" name="Changes" comment="Merge remote-tracking branch 'origin/main'">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/ArdaGone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/ArdaGone.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/TheFog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/TheFog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/ArdaGone-1.20.4-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/ArdaGone-1.20.4-shaded.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/ArdaGone-1.20.4.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/ArdaGone-1.20.4.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/ArdaGone$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/laser/ardagone/ArdaGone$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/ArdaGone.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/laser/ardagone/ArdaGone.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/TheFog.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/laser/ardagone/TheFog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/original-ArdaGone-1.20.4.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-ArdaGone-1.20.4.jar" afterDir="false" />
-    </list>
+    <list default="true" id="b6ff7c0b-2213-46a3-b996-d2e58b02fd70" name="Changes" comment="Merge remote-tracking branch 'origin/main'" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -150,7 +135,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711473433617</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Merge remote-tracking branch 'origin/main'">
+      <option name="closed" value="true" />
+      <created>1711478273819</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1711478273819</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
