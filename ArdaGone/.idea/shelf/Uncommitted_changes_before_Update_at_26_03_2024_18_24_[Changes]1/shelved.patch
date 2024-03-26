@@ -1,0 +1,221 @@
+Index: src/main/java/org/laser/ardagone/ArdaGone.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.laser.ardagone;\r\n\r\nimport com.mojang.authlib.GameProfile;\r\nimport com.mojang.authlib.properties.Property;\r\nimport org.bukkit.Bukkit;\r\nimport org.bukkit.ChatColor;\r\nimport org.bukkit.Material;\r\nimport org.bukkit.command.Command;\r\nimport org.bukkit.command.CommandSender;\r\nimport org.bukkit.entity.Player;\r\nimport org.bukkit.event.EventHandler;\r\nimport org.bukkit.event.Listener;\r\nimport org.bukkit.event.entity.ProjectileHitEvent;\r\nimport org.bukkit.event.inventory.InventoryClickEvent;\r\nimport org.bukkit.event.inventory.InventoryType;\r\nimport org.bukkit.event.player.PlayerInteractEvent;\r\nimport org.bukkit.event.player.PlayerJoinEvent;\r\nimport org.bukkit.inventory.Inventory;\r\nimport org.bukkit.inventory.ItemStack;\r\nimport org.bukkit.inventory.meta.ItemMeta;\r\nimport org.bukkit.inventory.meta.SkullMeta;\r\nimport org.bukkit.plugin.java.JavaPlugin;\r\nimport org.bukkit.scheduler.BukkitRunnable;\r\n\r\nimport java.lang.reflect.Field;\r\nimport java.util.Base64;\r\nimport java.util.UUID;\r\n\r\npublic final class ArdaGone extends JavaPlugin implements Listener {\r\n\r\n    private Characters characters;\r\n    private CharacterManager characterManager;\r\n    private TheFog theFog;\r\n    private SpawnPoints spawnPoints;\r\n    private  DamageSystem damageSystem;\r\n    private LobbySystem lobbySystem;\r\n    private LobbyHouse lobbyHouse;\r\n    @Override\r\n    public void onEnable() {\r\n        getServer().getPluginManager().registerEvents(this, this);\r\n        getCommand(\"test\").setExecutor(this);\r\n\r\n        characters = new Characters(this);\r\n\r\n        characterManager = new CharacterManager(this, characters);\r\n        getCommand(\"createcharacter\").setExecutor(characterManager);\r\n        getCommand(\"listcharacters\").setExecutor(characterManager);\r\n        getCommand(\"checkchars\").setExecutor(characterManager);\r\n        getCommand(\"character\").setExecutor(characterManager);\r\n        getCommand(\"selectcharacter\").setExecutor(characterManager);\r\n        getCommand(\"getchar\").setExecutor(characterManager);/*\r\n        getCommand(\"character\").setTabCompleter(characterManager);*/\r\n        getServer().getPluginManager().registerEvents(characterManager, this);\r\n\r\n        theFog = new TheFog(this);\r\n        getCommand(\"fornite\").setExecutor(theFog);\r\n\r\n        spawnPoints = new SpawnPoints(this);\r\n        getCommand(\"savespawnpoint\").setExecutor(spawnPoints);\r\n        getCommand(\"randomspawn\").setExecutor(spawnPoints);\r\n\r\n        damageSystem = new DamageSystem(this, characters);\r\n\r\n        lobbySystem = new LobbySystem(this,spawnPoints);\r\n\r\n        lobbyHouse = new LobbyHouse(this, characterManager);\r\n    }\r\n\r\n    @Override\r\n    public void onDisable() {\r\n    }\r\n\r\n    @Override\r\n    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {\r\n        if (command.getName().equalsIgnoreCase(\"test\")) {\r\n            if (sender instanceof Player) {\r\n                Player player = (Player) sender;\r\n                openCharacterSelectionGUI(player);\r\n            } else {\r\n                sender.sendMessage(\"Only players can use this command.\");\r\n            }\r\n            return true;\r\n        }\r\n        return false;\r\n    }\r\n\r\n    // Method to open the character selection GUI for a player\r\n    private void openCharacterSelectionGUI(Player player) {\r\n        Inventory gui = Bukkit.createInventory(player, InventoryType.DROPPER, \"Character Selection\");\r\n\r\n        ItemStack character1 = new ItemStack(Material.PLAYER_HEAD);\r\n        ItemMeta meta1 = character1.getItemMeta();\r\n        meta1.setDisplayName(\"Henry\");\r\n        character1.setItemMeta(meta1);\r\n        gui.setItem(0, character1);\r\n\r\n        ItemStack character2 = new ItemStack(Material.SKELETON_SKULL);\r\n        ItemMeta meta2 = character1.getItemMeta();\r\n        meta2.setDisplayName(\"Robin\");\r\n        character2.setItemMeta(meta2);\r\n        gui.setItem(1, character2);\r\n\r\n        player.openInventory(gui);\r\n    }\r\n\r\n    @EventHandler\r\n    public void onInventoryClick(InventoryClickEvent event) {\r\n        if (!(event.getWhoClicked() instanceof Player)) return;\r\n\r\n        Player player = (Player) event.getWhoClicked();\r\n        if (event.getView().getTitle().equals(\"Character Selection\")) {\r\n            int slotID = event.getSlot();\r\n\r\n            if (slotID >= 8) return;\r\n\r\n            event.setCancelled(true);\r\n            characters.selectCharacter(player, slotID);\r\n        }\r\n    }\r\n\r\n    @EventHandler\r\n    public void onPlayerInteract(PlayerInteractEvent event) {\r\n        if (event.getItem() != null && event.getItem().getType() == Material.NETHER_STAR) {\r\n            Player player = event.getPlayer();\r\n            openCharacterSelectionGUI(player);\r\n        }\r\n    }\r\n\r\n    @EventHandler\r\n    public void onProjectileHit(ProjectileHitEvent event) {\r\n        if (event.getHitBlock() != null && event.getHitBlock().getType() != Material.AIR) {\r\n            new BukkitRunnable() {\r\n                @Override\r\n                public void run() {\r\n                    event.getEntity().remove();\r\n                }\r\n            }.runTaskLater(this, 20);\r\n        }\r\n    }\r\n\r\n    public static ItemStack getHeadFromURL(String headName, String url) {\r\n        ItemStack stack = new ItemStack(Material.PLAYER_HEAD);\r\n        SkullMeta meta = (SkullMeta) stack.getItemMeta();\r\n\r\n        GameProfile profile = new GameProfile(UUID.randomUUID(), \"\");\r\n        profile.getProperties().put(\"textures\", new Property(\"textures\", new String(Base64.getEncoder().encode(String.format(\"{\\\"textures\\\":{\\\"SKIN\\\":{\\\"url\\\":\\\"%s\\\"}}}\", url).getBytes()))));\r\n\r\n        Field profileField;\r\n        try {\r\n            profileField = meta.getClass().getDeclaredField(\"profile\");\r\n            profileField.setAccessible(true);\r\n            profileField.set(meta, profile);\r\n        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n        meta.setDisplayName(ChatColor.WHITE + headName);\r\n        stack.setItemMeta(meta);\r\n\r\n        return stack;\r\n    }\r\n\r\n    public static ItemStack getHeadUpdated(String displayName, String texture) {\r\n        ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);\r\n        SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();\r\n\r\n        GameProfile gameProfile = new GameProfile(UUID.randomUUID(), \"playerName\");\r\n        String textureString = \"{textures:{SKIN:{url:\\\"http://textures.minecraft.net/texture/\" + texture + \"\\\"}}}\";\r\n        String base64Texture = Base64.getEncoder().encodeToString(textureString.getBytes());\r\n        gameProfile.getProperties().put(\"textures\", new Property(\"textures\", base64Texture));\r\n\r\n        Field profileField;\r\n        try {\r\n            profileField = skullMeta.getClass().getDeclaredField(\"profile\");\r\n            profileField.setAccessible(true);\r\n            profileField.set(skullMeta, gameProfile);\r\n        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e1) {\r\n            e1.printStackTrace();\r\n        }\r\n\r\n        itemStack.setItemMeta(skullMeta);\r\n        ItemMeta itemStackMeta = itemStack.getItemMeta();\r\n        itemStackMeta.setDisplayName(displayName);\r\n        itemStack.setItemMeta(itemStackMeta);\r\n        return itemStack;\r\n    }\r\n\r\n    public static ItemStack getPlayerHead(String playerName, String headName) {\r\n        ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);\r\n        SkullMeta meta = (SkullMeta) playerHead.getItemMeta();\r\n\r\n        meta.setOwner(playerName);\r\n\r\n        meta.setDisplayName(headName);\r\n\r\n        playerHead.setItemMeta(meta);\r\n\r\n        return playerHead;\r\n    }\r\n\r\n    @EventHandler\r\n    public void onPlayerJoin(PlayerJoinEvent event) {\r\n        Player player = event.getPlayer();\r\n        player.setHealthScaled(true);\r\n        player.setHealthScale(20);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/laser/ardagone/ArdaGone.java b/src/main/java/org/laser/ardagone/ArdaGone.java
+--- a/src/main/java/org/laser/ardagone/ArdaGone.java	
++++ b/src/main/java/org/laser/ardagone/ArdaGone.java	
+@@ -160,6 +160,7 @@
+         return stack;
+     }
+ 
++    //das ist scheise weil console macht faxxen das das alt is
+     public static ItemStack getHeadUpdated(String displayName, String texture) {
+         ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
+         SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_16_03_2024_12_41_[Changes]/shelved.patch
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_16_03_2024_12_41_[Changes]/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Update_at_16_03_2024_12_41_[Changes]/shelved.patch
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_16_03_2024_12_41_[Changes]/shelved.patch	
++++ /dev/null	
+@@ -1,72 +0,0 @@
+-Index: .idea/workspace.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"b6ff7c0b-2213-46a3-b996-d2e58b02fd70\" name=\"Changes\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/../.idea/.gitignore\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/../.idea/ardagone.iml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/../.idea/misc.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/../.idea/modules.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/../.idea/vcs.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/.gitignore\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/codeStyles/Project.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/misc.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/misc.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/uiDesigner.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/ArdaGone.iml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/ArdaGone.iml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/laser/ardagone/SpawnPoints.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/org/laser/ardagone/SpawnPoints.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$/..\" />\r\n  </component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"ProjectErrors\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\"><![CDATA[{\r\n  \"associatedIndex\": 7\r\n}]]></component>\r\n  <component name=\"ProjectId\" id=\"2d8N1lzhFFPRSzjwuxAhpmlFxxy\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/unkno/Documents/GitHub/ardagone/ArdaGone&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;\r\n  }\r\n}</component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"b6ff7c0b-2213-46a3-b996-d2e58b02fd70\" name=\"Changes\" comment=\"\" />\r\n      <created>1709385533124</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1709385533124</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"CUSTOM_BOOLEAN_PROPERTIES\">\r\n                <map>\r\n                  <entry key=\"Show.Git.Branches\" value=\"false\" />\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" type=\"java-field\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/ArdaGone.java</url>\r\n          <line>32</line>\r\n          <properties field=\"theFog\" class=\"org.laser.ardagone.ArdaGone\" />\r\n          <option name=\"timeStamp\" value=\"8\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-field\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/ArdaGone.java</url>\r\n          <line>33</line>\r\n          <properties field=\"spawnPoints\" class=\"org.laser.ardagone.ArdaGone\" />\r\n          <option name=\"timeStamp\" value=\"10\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/ArdaGone.java</url>\r\n          <line>28</line>\r\n          <option name=\"timeStamp\" value=\"6\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/CharacterManager.java</url>\r\n          <line>274</line>\r\n          <option name=\"timeStamp\" value=\"12\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/CharacterManager.java</url>\r\n          <line>275</line>\r\n          <option name=\"timeStamp\" value=\"13\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java</url>\r\n          <line>60</line>\r\n          <option name=\"timeStamp\" value=\"14\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java</url>\r\n          <line>74</line>\r\n          <option name=\"timeStamp\" value=\"15\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n</project>
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+---- a/.idea/workspace.xml	(revision 1da0de36b2d7b2f28a0a785c2306b1dadca561f6)
+-+++ b/.idea/workspace.xml	(date 1709469221194)
+-@@ -4,20 +4,8 @@
+-     <option name="autoReloadType" value="SELECTIVE" />
+-   </component>
+-   <component name="ChangeListManager">
+--    <list default="true" id="b6ff7c0b-2213-46a3-b996-d2e58b02fd70" name="Changes" comment="">
+--      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
+--      <change beforePath="$PROJECT_DIR$/../.idea/ardagone.iml" beforeDir="false" />
+--      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
+--      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
+--      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
+--      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+--      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
+--      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+--      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+--      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+--      <change beforePath="$PROJECT_DIR$/ArdaGone.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ArdaGone.iml" afterDir="false" />
+--      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java" afterDir="false" />
+--      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/SpawnPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/SpawnPoints.java" afterDir="false" />
+-+    <list default="true" id="b6ff7c0b-2213-46a3-b996-d2e58b02fd70" name="Changes" comment="new">
+-+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-     </list>
+-     <option name="SHOW_DIALOG" value="false" />
+-     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+-@@ -25,6 +13,11 @@
+-     <option name="LAST_RESOLUTION" value="IGNORE" />
+-   </component>
+-   <component name="Git.Settings">
+-+    <option name="PREVIOUS_COMMIT_AUTHORS">
+-+      <list>
+-+        <option value="la-ser &lt;77540680+la-ser@users.noreply.github.com&gt;" />
+-+      </list>
+-+    </option>
+-     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+-   </component>
+-   <component name="ProblemsViewState">
+-@@ -59,6 +52,15 @@
+-       <option name="presentableId" value="Default" />
+-       <updated>1709385533124</updated>
+-     </task>
+-+    <task id="LOCAL-00001" summary="new">
+-+      <option name="closed" value="true" />
+-+      <created>1709463413796</created>
+-+      <option name="number" value="00001" />
+-+      <option name="presentableId" value="LOCAL-00001" />
+-+      <option name="project" value="LOCAL" />
+-+      <updated>1709463413796</updated>
+-+    </task>
+-+    <option name="localTasksCounter" value="2" />
+-     <servers />
+-   </component>
+-   <component name="Vcs.Log.Tabs.Properties">
+-@@ -77,6 +79,10 @@
+-         </entry>
+-       </map>
+-     </option>
+-+  </component>
+-+  <component name="VcsManagerConfiguration">
+-+    <MESSAGE value="new" />
+-+    <option name="LAST_COMMIT_MESSAGE" value="new" />
+-   </component>
+-   <component name="XDebuggerManager">
+-     <breakpoint-manager>
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_16_03_2024_12_41__Changes_.xml
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_16_03_2024_12_41__Changes_.xml b/.idea/shelf/Uncommitted_changes_before_Update_at_16_03_2024_12_41__Changes_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_16_03_2024_12_41__Changes_.xml	
++++ /dev/null	
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_16_03_2024_12_41_[Changes]" date="1710589292045" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_03_2024_12_41_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 16.03.2024 12:41 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"b6ff7c0b-2213-46a3-b996-d2e58b02fd70\" name=\"Changes\" comment=\"new\">\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/laser/ardagone/TheFog.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/org/laser/ardagone/TheFog.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$/..\" />\r\n  </component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"ProjectErrors\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 7\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2d8N1lzhFFPRSzjwuxAhpmlFxxy\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/unkno/Documents/GitHub/ardagone/ArdaGone&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;\r\n  }\r\n}</component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"b6ff7c0b-2213-46a3-b996-d2e58b02fd70\" name=\"Changes\" comment=\"\" />\r\n      <created>1709385533124</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1709385533124</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"new\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1710590869193</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1710590869193</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"new\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1710590908315</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1710590908315</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"3\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"CUSTOM_BOOLEAN_PROPERTIES\">\r\n                <map>\r\n                  <entry key=\"Show.Git.Branches\" value=\"false\" />\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"new\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"new\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java</url>\r\n          <line>60</line>\r\n          <option name=\"timeStamp\" value=\"14\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java</url>\r\n          <line>74</line>\r\n          <option name=\"timeStamp\" value=\"28\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java</url>\r\n          <line>109</line>\r\n          <option name=\"timeStamp\" value=\"30\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-method\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/org/laser/ardagone/LobbySystem.java</url>\r\n          <line>106</line>\r\n          <properties class=\"org.laser.ardagone.LobbySystem\" method=\"startCountdown\">\r\n            <option name=\"EMULATED\" value=\"true\" />\r\n            <option name=\"WATCH_EXIT\" value=\"false\" />\r\n          </properties>\r\n          <option name=\"timeStamp\" value=\"29\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -4,8 +4,17 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="b6ff7c0b-2213-46a3-b996-d2e58b02fd70" name="Changes" comment="new">
+-      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/TheFog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/TheFog.java" afterDir="false" />
++    <list default="true" id="b6ff7c0b-2213-46a3-b996-d2e58b02fd70" name="Changes" comment="">
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_03_2024_12_41__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_03_2024_12_41__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/ArdaGone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/laser/ardagone/ArdaGone.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/ArdaGone-1.20.4-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/ArdaGone-1.20.4-shaded.jar" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/ArdaGone-1.20.4.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/ArdaGone-1.20.4.jar" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/ArdaGone.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/laser/ardagone/ArdaGone.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/LobbySystem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/laser/ardagone/LobbySystem.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/TheFog$CircleProperties.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/laser/ardagone/TheFog$CircleProperties.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/org/laser/ardagone/TheFog.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/laser/ardagone/TheFog.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/original-ArdaGone-1.20.4.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-ArdaGone-1.20.4.jar" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -28,6 +37,7 @@
+   </component>
+   <component name="PropertiesComponent">{
+   &quot;keyToString&quot;: {
++    &quot;Maven.ArdaGone [package].executor&quot;: &quot;Run&quot;,
+     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+@@ -38,6 +48,38 @@
+     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
+   }
+ }</component>
++  <component name="RunManager">
++    <configuration name="ArdaGone [package]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
++      <MavenSettings>
++        <option name="myGeneralSettings" />
++        <option name="myRunnerSettings" />
++        <option name="myRunnerParameters">
++          <MavenRunnerParameters>
++            <option name="cmdOptions" />
++            <option name="profiles">
++              <set />
++            </option>
++            <option name="goals">
++              <list>
++                <option value="package" />
++              </list>
++            </option>
++            <option name="multimoduleDir" />
++            <option name="pomFileName" />
++            <option name="profilesMap">
++              <map />
++            </option>
++            <option name="projectsCmdOptionValues">
++              <list />
++            </option>
++            <option name="resolveToWorkspace" value="false" />
++            <option name="workingDirPath" value="$PROJECT_DIR$" />
++          </MavenRunnerParameters>
++        </option>
++      </MavenSettings>
++      <method v="2" />
++    </configuration>
++  </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+@@ -47,23 +89,6 @@
+       <option name="presentableId" value="Default" />
+       <updated>1709385533124</updated>
+     </task>
+-    <task id="LOCAL-00001" summary="new">
+-      <option name="closed" value="true" />
+-      <created>1710590869193</created>
+-      <option name="number" value="00001" />
+-      <option name="presentableId" value="LOCAL-00001" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1710590869193</updated>
+-    </task>
+-    <task id="LOCAL-00002" summary="new">
+-      <option name="closed" value="true" />
+-      <created>1710590908315</created>
+-      <option name="number" value="00002" />
+-      <option name="presentableId" value="LOCAL-00002" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1710590908315</updated>
+-    </task>
+-    <option name="localTasksCounter" value="3" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -82,10 +107,6 @@
+         </entry>
+       </map>
+     </option>
+-  </component>
+-  <component name="VcsManagerConfiguration">
+-    <MESSAGE value="new" />
+-    <option name="LAST_COMMIT_MESSAGE" value="new" />
+   </component>
+   <component name="XDebuggerManager">
+     <breakpoint-manager>

@@ -1,0 +1,29 @@
+<changelist name="Uncommitted_changes_before_Update_at_26_03_2024_18_27_[Changes]" date="1711474064332" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_03_2024_18_27_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 26.03.2024 18:27 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/org/laser/ardagone/ArdaGone.class" />
+    <option name="AFTER_PATH" value="target/classes/org/laser/ardagone/ArdaGone.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_03_2024_18_27_[Changes]/ArdaGone.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/org/laser/ardagone/TheFog.class" />
+    <option name="AFTER_PATH" value="target/classes/org/laser/ardagone/TheFog.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_03_2024_18_27_[Changes]/TheFog.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/original-ArdaGone-1.20.4.jar" />
+    <option name="AFTER_PATH" value="target/original-ArdaGone-1.20.4.jar" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_03_2024_18_27_[Changes]/original-ArdaGone-1.20.4.jar" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/ArdaGone-1.20.4-shaded.jar" />
+    <option name="AFTER_PATH" value="target/ArdaGone-1.20.4-shaded.jar" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_03_2024_18_27_[Changes]/ArdaGone-1.20.4-shaded.jar" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/ArdaGone-1.20.4.jar" />
+    <option name="AFTER_PATH" value="target/ArdaGone-1.20.4.jar" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_03_2024_18_27_[Changes]/ArdaGone-1.20.4.jar" />
+  </binary>
+</changelist>
